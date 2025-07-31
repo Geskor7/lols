@@ -1,53 +1,131 @@
-const q=[{quote:"I'm living in the future, so the present is my past.",author:"Kanye West"},{quote:"Everything I'm not made me everything I am.",author:"Kanye West"},{quote:"Reach for the stars, so if you fall you land on a cloud.",author:"Kanye West"},{quote:"The greatest pain in life is not being able to express yourself.",author:"Kanye West"},{quote:"Believe in your flyness, conquer your shyness.",author:"Kanye West"},{quote:"I'm on a pursuit of happiness and I know everything that shines ain't always gonna be gold.",author:"Kanye West"},{quote:"Lock yourself in a room doing five beats a day for three summers.",author:"Kanye West"},{quote:"Started from the bottom now we're here.",author:"Drake"},{quote:"I'm way up, I feel blessed.",author:"Drake"},{quote:"Tables turn, bridges burn, you live and learn.",author:"Drake"},{quote:"Know yourself, know your worth.",author:"Drake"},{quote:"Last name ever, first name greatest.",author:"Drake"},{quote:"I'm just saying you could do better.",author:"Drake"},{quote:"What a time to be alive.",author:"Drake"},{quote:"For this life, I cannot change.",author:"Travis Scott"},{quote:"I'm the highest in the room.",author:"Travis Scott"},{quote:"It ain't a mosh pit if there ain't no injuries.",author:"Travis Scott"},{quote:"I might need me some ventilation, a little vacation.",author:"Travis Scott"},{quote:"Anything can happen at the night show.",author:"Travis Scott"},{quote:"Chase these dreams, not these women.",author:"Travis Scott"},{quote:"I ain't here for a long time, I'm here for a good time.",author:"Travis Scott"},{quote:"Mask on, f*** it, mask off.",author:"Future"},{quote:"At the end of the day, I'm here to win.",author:"Future"},{quote:"You can't be afraid to lose. There's no room for fear in this game.",author:"Future"},{quote:"I'm the only one that's in my way.",author:"Future"},{quote:"I came from the bottom, I ain't going back.",author:"Future"},{quote:"I'm just tryna get richer, and richer, and richer.",author:"Future"},{quote:"Sensational, that's what you are.",author:"Future"},{quote:"I'd rather die before I come in last.",author:"Playboi Carti"},{quote:"They can't understand me, I'm talking hieroglyphics.",author:"Playboi Carti"},{quote:"I'm a rockstar, I could've joined a band.",author:"Playboi Carti"},{quote:"Wake up and smell the motherf***in' coffee.",author:"Playboi Carti"},{quote:"I feel like God, I feel like a king.",author:"Playboi Carti"},{quote:"I'm not a role model.",author:"Playboi Carti"},{quote:"Jump out the house, jump out the house.",author:"Playboi Carti"},{quote:"I've been on a roll, where you been?",author:"Don Toliver"},{quote:"What you want, I got it.",author:"Don Toliver"},{quote:"I can't be no regular, I'm a hot boy.",author:"Don Toliver"},{quote:"You say you want to go to heaven, grab my hand.",author:"Don Toliver"},{quote:"I'm in my own lane, I'm on my own pace.",author:"Don Toliver"},{quote:"I'm way too gone, I'm way too high.",author:"Don Toliver"},{quote:"Had to get it out the mud, I don't have no choice.",author:"Don Toliver"},{quote:"I'm not from this earth, I'm from outer space.",author:"Yeat"},{quote:"I'm in the Tonka, come show me what's up.",author:"Yeat"},{quote:"I don't be textin' no essays, I just be sendin' the cash.",author:"Yeat"},{quote:"I just pulled up with a cool hundred bands on me.",author:"Yeat"},{quote:"All I do is get money, all I do is get paid.",author:"Yeat"},{quote:"I'm working on dying.",author:"Yeat"},{quote:"I count money up for fun.",author:"Yeat"},{quote:"I'm not worried 'bout a single soul on the earth.",author:"Yeat"}];
-const dId='849677162684219423';const wKey='f4b114d17d56033c6d14b06fc5e434a4';const cName='Kandy';let acI=null;let auI=null;let wsI=null;let qT;let ap=null;let cptd=null;function f1(){const a=document.getElementById('background');if(!a){console.error("Media elements not found");return}
-a.volume=0.3;a.play().catch(b=>{console.warn("Initial video play attempt failed (expected if muted in HTML):",b)})}
-const tei=30;const tl=2.2;const mc="01ABCDEF!@#$%^&*()_+=-{}[]|:;<>?/.,`~";const tvdp=150;const tis=1.0;const tfs=0.5;const tsxr=30;const tsyr=10;let lmx=0;let lmy=0;let tii=null;function f2(a,b){const c=document.createElement('span');c.classList.add('matrix-trail-char');const d=mc[Math.floor(Math.random()*mc.length)];c.textContent=d;const e=(Math.random()-0.5)*tsxr;const f=(Math.random()-0.5)*tsyr;c.style.left=`${a+e}px`;c.style.top=`${b+f}px`;document.body.appendChild(c);gsap.to(c,{opacity:0,y:`+=${tvdp+(Math.random()*10-5)}`,scale:tfs,rotation:(Math.random()-0.5)*720,duration:tl,ease:"power1.out",onComplete:()=>c.remove()})}
-async function f3(){const a=document.getElementById('spotify-playlist-art');const b=document.getElementById('spotify-playlist-name');const c=document.getElementById('spotify-playlist-creator');const d=document.getElementById('spotify-track-list');try{const e=await fetch('/.netlify/functions/getSpotifyPlaylist');if(!e.ok){const g=await e.json();console.error('API Error Details:',g);throw new Error(`API request failed: ${e.status}`)}
-const f=await e.json();a.src=f.playlistArtUrl;b.textContent=f.name;c.textContent=`By ${f.creator}`;d.innerHTML='';f.tracks.forEach(h=>{const i=document.createElement('div');i.className='spotify-track';let j='';if(h.previewUrl){j=`<button class="play-pause-btn play" data-preview-url="${h.previewUrl}"></button>`}
-i.innerHTML=`
-                <img src="${h.albumArtUrl}" alt="Album Art" class="spotify-track-art">
-                <div class="spotify-track-info">
-                    <p class="spotify-track-name">${h.name}</p>
-                    <p class="spotify-track-artist">${h.artist}</p>
-                </div>
-                ${j}
-            `;d.appendChild(i)})}catch(k){console.error('Failed to fetch Spotify playlist:',k);if(d){d.innerHTML='<p class="spotify-loading-text">Failed to load playlist.</p>'}}}
-function f4(a){if(!a.target.matches('.play-pause-btn'))return;const b=a.target;const c=b.closest('.spotify-track');const d=b.dataset.previewUrl;if(cptd&&cptd!==c){cptd.classList.remove('playing');const e=cptd.querySelector('.play-pause-btn');if(e)e.classList.replace('pause','play');ap.pause()}
-if(ap.src===d&&!ap.paused){ap.pause()}else{ap.src=d;ap.play();c.classList.add('playing');b.classList.replace('play','pause');cptd=c}}
-document.addEventListener('DOMContentLoaded',()=>{const a=document.getElementById('start-screen');const b=document.getElementById('start-text');const c=document.getElementById('profile-name');const d=document.getElementById('visitor-count');const e=document.getElementById('background');const f=document.getElementById('volume-icon');const g=document.getElementById('volume-slider');const h=document.getElementById('transparency-icon');const i=document.getElementById('transparency-slider');const j=document.querySelector('.glitch-overlay');const k=document.getElementById('profile-block');const l=document.querySelector('.profile-picture');const m=document.querySelector('.custom-cursor');const n=m;const o=document.getElementById('local-time');const p=document.getElementById('weather-icon');const r=document.getElementById('weather-temp');ap=document.getElementById('track-preview-player');const s=document.getElementById('spotify-track-list');s.addEventListener('click',f4);ap.addEventListener('ended',()=>{if(cptd){cptd.classList.remove('playing');const t=cptd.querySelector('.play-pause-btn');if(t)t.classList.replace('pause','play');cptd=null}});ap.addEventListener('pause',()=>{if(cptd){cptd.classList.remove('playing');const t=cptd.querySelector('.play-pause-btn');if(t)t.classList.replace('pause','play');cptd=null}});const u=window.matchMedia("(pointer: coarse)").matches;let v;if(u){document.body.classList.add('touch-device');document.addEventListener('touchstart',w=>{const x=w.touches[0];lmx=x.clientX;lmy=x.clientY;n.style.left=x.clientX+'px';n.style.top=x.clientY+'px'});document.addEventListener('touchmove',w=>{const x=w.touches[0];lmx=x.clientX;lmy=x.clientY;n.style.left=x.clientX+'px';n.style.top=x.clientY+'px';n.style.display='block'});document.addEventListener('touchend',()=>{n.style.display='none'})}else{n.style.display='none';document.addEventListener('mouseenter',w=>{n.style.display='block';lmx=w.clientX;lmy=w.clientY;n.style.left=w.clientX+'px';n.style.top=w.clientY+'px'});document.addEventListener('mouseleave',()=>{n.style.display='none'});document.addEventListener('mousemove',w=>{lmx=w.clientX;lmy=w.clientY;n.style.left=w.clientX+'px';n.style.top=w.clientY+'px'});document.addEventListener('mousedown',()=>{n.style.transform='scale(0.8) translate(-50%, -50%)'});document.addEventListener('mouseup',()=>{n.style.transform='scale(1) translate(-50%, -50%)'})}
-function y(){if(!tii){tii=setInterval(()=>{if(lmx!==0&&lmy!==0){f2(lmx,lmy)}},tei)}}
-function z(){if(tii){clearInterval(tii);tii=null}}
-function A(){const w=new Date();const x=w.toLocaleTimeString('en-US',{timeZone:'Asia/Colombo',hour:'2-digit',minute:'2-digit',hour12:true});o.textContent=x}
-async function B(){if(!wKey||wKey==='YOUR_OPENWEATHER_API_KEY'){console.warn("OpenWeather API key not set. Skipping weather fetch.");r.textContent="N/A";return}
-const w=`https://api.openweathermap.org/data/2.5/weather?q=${cName}&appid=${wKey}&units=metric`;try{const x=await fetch(w);if(!x.ok)throw new Error(`Weather API request failed: ${x.status}`);const y=await x.json();r.textContent=`${Math.round(y.main.temp)}°C`;p.src=`https://openweathermap.org/img/wn/${y.weather[0].icon}@2x.png`;p.alt=y.weather[0].description}catch(z){console.error("Failed to fetch weather data:",z);r.textContent='Error'}}
-function C(w){w.preventDefault();a.classList.add('hidden');e.muted=false;e.play().catch(x=>console.error("Failed to play background video after user interaction:",x));k.classList.remove('hidden');gsap.fromTo(k,{opacity:0,y:-50},{opacity:1,y:0,duration:1,ease:'power2.out'});E();if(!u)y();G();I();A();B();setInterval(A,1000);setInterval(B,1800000);f3()}
-a.addEventListener('click',C);a.addEventListener('touchstart',C);function E(){const w={value:0};gsap.to(w,{value:v,duration:2,ease:"power1.out",onUpdate:()=>{d.textContent=Math.round(w.value).toLocaleString()}})}
-function F(){let w=localStorage.getItem('totalVisitorCount');if(!w){w=7340;localStorage.setItem('totalVisitorCount',w)}else{w=parseInt(w)}
-const x=localStorage.getItem('hasVisited');if(!x){w++;localStorage.setItem('totalVisitorCount',w);localStorage.setItem('hasVisited','true')}
-v=w}
-F();const H="Click here to wake up the pixels!";let J='';let K=0;let L=true;function M(){if(K<H.length){J=H.slice(0,K+1);K++}
-b.textContent=J+(L?'|':' ');setTimeout(M,100)}
-setInterval(()=>{L=!L;b.textContent=J+(L?'|':' ')},500);M();const N="enzy";let O='';let P=0;let Q=false;let R=true;function G(){if(!Q&&P<N.length){O=N.slice(0,P+1);P++}else if(Q&&P>0){O=N.slice(0,P-1);P--}else if(P===N.length){Q=true;setTimeout(G,10000);return}else if(P===0){Q=false}
-c.textContent=O+(R?'|':' ');if(Math.random()<0.1){c.classList.add('glitch');setTimeout(()=>c.classList.remove('glitch'),200)}
-setTimeout(G,Q?150:300)}
-setInterval(()=>{R=!R;c.textContent=O+(R?'|':' ')},500);function S(w,x){const y=document.getElementById('profile-bio');if(!y)return;let z=0;y.textContent='|';function A(){if(z<w.length){y.textContent=w.slice(0,z+1)+'|';z++;setTimeout(A,35)}else{y.textContent=w;if(x)x()}}
-A()}
-function T(w){const x=document.getElementById('profile-bio');if(!x)return;let y=x.textContent;let z=y.length;function A(){if(z>0){x.textContent=y.slice(0,z-1)+'|';z--;setTimeout(A,25)}else{x.textContent='|';if(w)w()}}
-A()}
-function U(){T(()=>{const w=Math.floor(Math.random()*q.length);const x=q[w];const y=`"${x.quote}" — ${x.author}`;S(y,()=>{qT=setTimeout(U,4000)})})}
-function I(){const w=document.getElementById('profile-bio');if(!w)return;const x=Math.floor(Math.random()*q.length);const y=q[x];const z=`"${y.quote}" — ${y.author}`;S(z,()=>{qT=setTimeout(U,4000)})}
-let V=e;let W=false;f.addEventListener('click',()=>{W=!W;V.muted=W;f.innerHTML=W?`<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>`:`<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`});g.addEventListener('input',()=>{V.volume=g.value;W=false;V.muted=false;f.innerHTML=`<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`});function X(){const w=i.value;k.style.backgroundColor=`rgba(0, 0, 0, ${w*0.4})`;if(w==0){k.style.backdropFilter='none'}else{k.style.backdropFilter=`blur(${10*w}px)`}}
-i.addEventListener('input',X);X();function Y(w,x){const y=x.getBoundingClientRect();const z=y.left+y.width/2;const A=y.top+y.height/2;let B,C;if(w.type==='touchmove'){B=w.touches[0].clientX;C=w.touches[0].clientY}else{B=w.clientX;C=w.clientY}
-const D=B-z;const E=C-A;const F=15;const G=(E/y.height)*F;const H=-(D/y.width)*F;gsap.to(x,{rotationX:G,rotationY:H,duration:0.3,ease:'power2.out',transformPerspective:1000})}
-k.addEventListener('mousemove',w=>Y(w,k));k.addEventListener('touchmove',w=>{w.preventDefault();Y(w,k)});k.addEventListener('mouseleave',()=>{gsap.to(k,{rotationX:0,rotationY:0,duration:0.5,ease:'power2.out'})});k.addEventListener('touchend',()=>{gsap.to(k,{rotationX:0,rotationY:0,duration:0.5,ease:'power2.out'})});l.addEventListener('mouseenter',()=>{j.style.opacity='1';setTimeout(()=>{j.style.opacity='0'},500)});function Z(w){if(isNaN(w)||w<0)return'00:00';const x=Math.floor(w/1000);const y=Math.floor(x/60).toString().padStart(2,'0');const z=(x%60).toString().padStart(2,'0');return`${y}:${z}`}
-function aa(){document.querySelectorAll('.activity-progress-bar-fill').forEach(w=>{const x=parseInt(w.dataset.start,10);const y=parseInt(w.dataset.end,10);const z=Date.now();if(isNaN(x)||isNaN(y))return;const A=y-x;const B=z-x;let C=(B/A)*100;C=Math.max(0,Math.min(C,100));w.style.width=`${C}%`;const D=w.closest('.activity-slide').querySelector('.time-info-text');if(D){D.textContent=`${Z(B)} / ${Z(A)}`}});document.querySelectorAll('.elapsed-time-text').forEach(w=>{const x=parseInt(w.dataset.start,10);if(isNaN(x))return;const y=Date.now()-x;w.textContent=`${Z(y)} elapsed`})}
-function ba(w){const x=document.getElementById('activity-carousel-wrapper');const y=document.getElementById('discord-activity');if(!x||!y)return;gsap.killTweensOf(y);clearInterval(acI);clearInterval(auI);const z=[];const A={'spotify':'#1DB954','netflix':'#E50914','youtube':'#FF0000','visual studio code':'#007ACC'};const B='#8ea1e1';const C=w.discord_status||'offline';let D='#747F8D';switch(C){case'online':D='#43B581';break;case'idle':D='#FAA61A';break;case'dnd':D='#F04747';break}
-const E=`<div style="width: 10px; height: 10px; border-radius: 50%; background-color: ${D}; border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0; box-shadow: 0 0 8px ${D};"></div>`;if(w.listening_to_spotify&&w.spotify){const F=w.spotify;const G=F.timestamps?`<div class="activity-progress-content"><div class="activity-progress-bar-container"><div class="activity-progress-bar-fill" data-start="${F.timestamps.start}" data-end="${F.timestamps.end}"></div></div><p class="time-info-text"></p></div>`:'';const H=`<p class="activity-title"><span style="font-weight: 400;">Listening to </span><span style="color: ${A.spotify}; font-weight: 700; text-shadow: 0 0 8px ${A.spotify};">Spotify</span></p>`;z.push(`<div class="activity-slide"><img src="${F.album_art_url}" alt="Album Art" style="width: 50px; height: 50px; border-radius: 8px; flex-shrink: 0;"><div class="activity-details-container">${H}<p class="activity-details">${F.song}</p><p class="activity-state">by ${F.artist}</p>${G}</div></div>`)}
-if(w.activities&&w.activities.length>0){w.activities.filter(F=>F.name!=='Spotify'&&F.type!==4).forEach(F=>{const G=F.assets?.large_image?(F.assets.large_image.startsWith('mp:external/')?`https://media.discordapp.net/external/${F.assets.large_image.substring(12)}`:`https://cdn.discordapp.com/app-assets/${F.application_id}/${F.assets.large_image}.png`):'';const H=F.type===3?'Watching':(F.type===2?'Listening to':'Playing');const I=A[F.name.toLowerCase()]||B;const J=`<p class="activity-title"><span style="font-weight: 400;">${H} </span><span style="color: ${I}; font-weight: 700; text-shadow: 0 0 8px ${I};">${F.name}</span></p>`;let K=`${J}${F.details?`<p class="activity-details">${F.details}</p>`:''}${F.state?`<p class="activity-state">${F.state}</p>`:''}`;let L='';if(F.timestamps){if(F.timestamps.start&&F.timestamps.end){L=`<div class="activity-progress-content"><div class="activity-progress-bar-container"><div class="activity-progress-bar-fill" data-start="${F.timestamps.start}" data-end="${F.timestamps.end}"></div></div><p class="time-info-text"></p></div>`}else if(F.timestamps.start){K+=`<p class="time-info-text elapsed-time-text" data-start="${F.timestamps.start}"></p>`}}
-z.push(`<div class="activity-slide">${E}${G?`<img src="${G}" alt="${F.name}" style="width: 45px; height: 45px; border-radius: 8px; flex-shrink: 0;">`:''}<div class="activity-details-container">${K}${L}</div></div>`)})}
-if(z.length===0){const F=C.charAt(0).toUpperCase()+C.slice(1);z.push(`<div class="activity-slide">${E}<div class="activity-details-container"><p class="activity-details">${F}</p><p class="activity-state">Not doing anything right now.</p></div></div>`)}
-gsap.to(y,{opacity:0,duration:0.3,ease:"power1.in",onComplete:()=>{x.innerHTML=z.join('');aa();auI=setInterval(aa,1000);const F=x.querySelectorAll('.activity-slide');if(F.length>1){let G=0;acI=setInterval(()=>{G=(G+1)%F.length;x.style.transform=`translateX(-${G*100}%)`},5000)}
-gsap.to(y,{opacity:1,duration:0.4,ease:"power1.out"})}})}
-let ca;function da(){ca=new WebSocket('wss://api.lanyard.rest/websocket');ca.onopen=()=>{console.log('Connected to Lanyard WebSocket');ca.send(JSON.stringify({op:2,d:{subscribe_to_ids:[dId]}}));if(wsI)clearInterval(wsI);wsI=setInterval(()=>{if(ca.readyState===1){ca.send(JSON.stringify({op:3}))}},30000)};ca.onmessage=(w)=>{const{op:x,t:y,d:z}=JSON.parse(w.data);if(x===0&&(y==='INIT_STATE'||y==='PRESENCE_UPDATE')){ba(z)}};ca.onclose=()=>{if(wsI){clearInterval(wsI);wsI=null}
-console.warn('Lanyard WebSocket disconnected. Reconnecting in 5s...');setTimeout(da,5000)};ca.onerror=(w)=>{console.error('Lanyard WebSocket error:',w);ca.close()}}
-fetch(`https://api.lanyard.rest/v1/users/${dId}`).then(w=>w.json()).then(w=>{if(w.success){ba(w.data)}else{document.getElementById('activity-carousel-wrapper').innerHTML=`<div class="activity-slide"><p style="font-size: 14px; margin: 0; color: rgba(255, 255, 255, 0.7);">Discord: Data not available.</p></div>`}}).catch(w=>{console.error('Error fetching initial Lanyard data:',w);document.getElementById('activity-carousel-wrapper').innerHTML=`<div class="activity-slide"><p style="font-size: 14px; margin: 0; color: #F04747;">Failed to load activity.</p></div>`});da()});
+const b = document.querySelector('canvas'),
+  c = document.querySelector('.name'),
+  d = b.getContext('2d');
+let e = [],
+  f = [],
+  g = [],
+  h = 0,
+  i = 0,
+  j = 0,
+  k = window.innerWidth,
+  l = window.innerHeight;
+b.width = k;
+b.height = l;
+const m = 70,
+  n = 30;
+function o() {
+  for (let a = 0; a < m; a++) {
+    const b = Math.random() * k,
+      c = Math.random() * l,
+      d = 2 + Math.random() * 2,
+      f = 0.5 + Math.random(),
+      g = 0.2 + 0.3 * Math.random();
+    e.push({
+      x: b,
+      y: c,
+      radius: d,
+      alpha: f,
+      speed: g
+    });
+  }
+}
+function p() {
+  for (let a = 0; a < n; a++) {
+    const b = Math.random() * k,
+      c = Math.random() * l,
+      e = 0.5 + Math.random(),
+      f = 1 + 2 * Math.random();
+    g.push({
+      x: b,
+      y: c,
+      alpha: e,
+      speed: f
+    });
+  }
+}
+function q() {
+  d.clearRect(0, 0, k, l),
+    r(),
+    s(),
+    t(),
+    u(),
+    requestAnimationFrame(q);
+}
+function r() {
+  for (let a = 0; a < e.length; a++) {
+    const b = e[a];
+    b.y -= b.speed,
+      b.alpha -= 0.002,
+      b.alpha <= 0 && (b.x = Math.random() * k,
+        b.y = l + 10,
+        b.alpha = 0.5 + Math.random()),
+      d.beginPath(),
+      d.arc(b.x, b.y, b.radius, 0, 2 * Math.PI, !1),
+      d.fillStyle = `rgba(255,255,255,${b.alpha})`,
+      d.fill();
+  }
+}
+function s() {
+  for (let a = 0; a < f.length; a++) {
+    const b = f[a];
+    b.x += b.vx,
+      b.y += b.vy,
+      b.life++,
+      b.life > 100 && f.splice(a, 1),
+      d.beginPath(),
+      d.arc(b.x, b.y, 1.5, 0, 2 * Math.PI, !1),
+      d.fillStyle = `rgba(255,0,0,${1 - b.life / 100})`,
+      d.fill();
+  }
+}
+function t() {
+  for (let a = 0; a < g.length; a++) {
+    const b = g[a];
+    b.y -= b.speed,
+      b.alpha -= 0.005,
+      b.alpha <= 0 && (b.x = Math.random() * k,
+        b.y = l + 10,
+        b.alpha = 0.5 + Math.random()),
+      d.beginPath(),
+      d.rect(b.x, b.y, 1.5, 10),
+      d.fillStyle = `rgba(0,255,0,${b.alpha})`,
+      d.fill();
+  }
+}
+function u() {
+  j++,
+    j % 5 == 0 && f.push({
+      x: k / 2,
+      y: l / 2,
+      vx: -2 + 4 * Math.random(),
+      vy: -2 + 4 * Math.random(),
+      life: 0
+    });
+}
+window.addEventListener('resize', () => {
+  k = window.innerWidth,
+    l = window.innerHeight,
+    b.width = k,
+    b.height = l;
+});
+const N = "RAX";
+let O = '',
+  P = 0,
+  Q = !1,
+  R = !0;
+function G() {
+  if (!Q && P < N.length) O = N.slice(0, P + 1), P++;
+  else if (Q && P > 0) O = N.slice(0, P - 1), P--;
+  else if (P === N.length) Q = !0, setTimeout(G, 1e4);
+  else if (0 === P) Q = !1;
+  c.textContent = O + (R ? "|" : " "),
+    Math.random() < .1 && (c.classList.add("glitch"), setTimeout(() => c.classList.remove("glitch"), 200)),
+    setTimeout(G, Q ? 150 : 300);
+}
+setInterval(() => {
+  R = !R;
+}, 500);
+o(),
+  p(),
+  q(),
+  G();
